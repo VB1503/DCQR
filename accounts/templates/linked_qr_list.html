@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="https://res.cloudinary.com/dybwn1q6h/image/upload/v1715572132/favicon_tmeqwo.png" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linked QR Codes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .search-bar {
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        li {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        li p {
+            margin: 10px 0;
+        }
+
+        li img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin-top: 10px;
+        }
+
+        .download-link {
+            display: block;
+            margin: 10px 0;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .download-link:hover {
+            background-color: #0056b3;
+        }
+        .link a,.chunk{
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            word-break: break-all;
+            }
+            .home{
+            padding:10px;
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            text-decoration: none;
+        }
+        .home img{
+            width: 30px;
+            height: 30px;
+            object-fit: cover;
+            display: block;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            li {
+                padding: 15px;
+            }
+            .link{
+                width: 80%;
+            }
+            
+        }
+    </style>
+    <script>
+        function filterQRCodes() {
+            let query = document.getElementById('search-input').value.toLowerCase();
+            let qrItems = document.querySelectorAll('.qr-item');
+
+            qrItems.forEach(function(item) {
+                let phone = item.querySelector('.phone').textContent.toLowerCase();
+                let email = item.querySelector('.email').textContent.toLowerCase();
+                let name = item.querySelector('.name').textContent.toLowerCase();
+
+                if (phone.includes(query) || email.includes(query) || name.includes(query)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('search-input').addEventListener('input', filterQRCodes);
+        });
+    </script>
+</head>
+<body>
+    <a href="{% url 'home' %}" class="home"><img src="https://cdn-icons-png.flaticon.com/128/69/69524.png" alt="home"></a>
+    <h1>Linked QR Codes</h1>
+    <div class="search-bar">
+        <input type="text" id="search-input" placeholder="Search by phone, email, or name">
+    </div>
+    <ul>
+        {% for qr in linked_qrs %}
+            <li class="qr-item">
+                <p class="chunk">Chunk: {{ qr.chunk }}</p>
+                <p class="name">Business Name: {{ qr.business_name }}</p>
+                <p class="phone">Phone: {{ qr.business_phone_number }}</p>
+                <p class="email">Email: {{ qr.business_email }}</p>
+                <p class="link">Link: <a href="{{ qr.qr_link }}">{{ qr.qr_link }}</a></p>
+                <p>QR Image: <img src="{{ qr.qr_image }}" alt="QR Code"></p>
+                <a href="{% url 'download_qr_image' qr.chunk %}" class="download-link">Download QR Image</a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

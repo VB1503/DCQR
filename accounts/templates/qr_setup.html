@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="https://res.cloudinary.com/dybwn1q6h/image/upload/v1715572132/favicon_tmeqwo.png" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Setup</title>
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <style>
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            margin-top: 40px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .form-container input[type="text"],
+        .form-container input[type="email"],
+        .form-container input[type="url"],
+        .form-container input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .form-container button {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        #scan-button {
+            background-color: #007bff;
+            color: white;
+        }
+
+        #scan-button:hover {
+            background-color: #0056b3;
+        }
+
+        .scanner-container {
+            width: 100%;
+            max-width: 400px;
+            flex-grow: 2;
+        }
+
+        .content {
+            display: flex;
+            gap: 20px;
+            flex-direction: row;
+            justify-content: center;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                flex-direction: column-reverse;
+                align-items: center;
+            }
+        }
+
+        .home {
+            padding: 10px;
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            text-decoration: none;
+        }
+
+        .home img {
+            width: 30px;
+            height: 30px;
+            object-fit: cover;
+            display: block;
+        }
+        .error{
+            color: red;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <a href="{% url 'home' %}" class="home"><img src="https://cdn-icons-png.flaticon.com/128/69/69524.png" alt="home"></a>
+    <div class="container">
+        <h1>QR Setup</h1>
+        <div class="content">
+            <form method="post" class="form-container">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <p class="error">{{error_message}}</p>
+                <button type="submit">Submit</button>
+            </form>
+            <div class="scanner-container">
+                <div id="my-qr-reader"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function domReady(fn) {
+            if (document.readyState === "complete" || document.readyState === "interactive") {
+                setTimeout(fn, 1000);
+            } else {
+                document.addEventListener("DOMContentLoaded", fn);
+            }
+        }
+
+        domReady(function () {
+            let html5QrCodeScanner;
+
+            function onScanSuccess(decodeText, decodeResult) {
+                let qrLinkInput = document.querySelector('input[name="qr_link"]');
+                if (!qrLinkInput) {
+                    qrLinkInput = document.createElement('input');
+                    qrLinkInput.type = 'hidden';
+                    qrLinkInput.name = 'qr_link';
+                    document.querySelector('form').appendChild(qrLinkInput);
+                }
+                qrLinkInput.value = decodeText;
+                console.log("QR code scanned: ", decodeText);
+                html5QrCodeScanner.clear().then(ignore => {
+                    console.log("QR scanning stopped.");
+                    document.getElementById('my-qr-reader').style.display = 'none';
+                }).catch(err => {
+                    console.error("Unable to stop scanning.", err);
+                });
+            }
+
+            const config = { fps: 10, qrbox: 250 };
+            html5QrCodeScanner = new Html5QrcodeScanner(
+                "my-qr-reader",
+                config,
+                false
+            );
+            html5QrCodeScanner.render(onScanSuccess);
+
+            document.getElementById('scan-button').addEventListener('click', function() {
+                const reader = document.getElementById('my-qr-reader');
+                reader.style.display = 'block';
+                html5QrCodeScanner.render(onScanSuccess);
+            });
+
+            document.getElementById('close-button').addEventListener('click', function() {
+                html5QrCodeScanner.clear().then(ignore => {
+                    console.log("QR scanning stopped.");
+                    document.getElementById('my-qr-reader').style.display = 'none';
+                }).catch(err => {
+                    console.error("Unable to stop scanning.", err);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

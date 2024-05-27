@@ -1,0 +1,83 @@
+<!-- business_details.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="https://res.cloudinary.com/dybwn1q6h/image/upload/v1715572132/favicon_tmeqwo.png" type="image/x-icon">
+    <title>Business Details</title>
+    <style>
+        .card {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin: 15px;
+            border-radius: 5px;
+            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .card h3 {
+            margin-top: 0;
+        }
+
+        .search-bar input[type=text]{
+            width: 80%;
+            height: auto;
+            padding: 14px 20px;
+            outline: none;
+            font-size: 14px;
+        }
+        a{
+            text-decoration: none;
+            color: green;
+        }
+        .home{
+            padding:10px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            text-decoration: none;
+        }
+        .home img{
+            width: 30px;
+            height: 30px;
+            object-fit: cover;
+            display: block;
+        }
+    </style>
+    <script>
+        function filterCards() {
+            let input = document.getElementById('searchInput').value.toUpperCase();
+            let cards = document.getElementsByClassName('card');
+
+            for (let i = 0; i < cards.length; i++) {
+                let card = cards[i];
+                let textContent = card.textContent || card.innerText;
+                if (textContent.toUpperCase().indexOf(input) > -1) {
+                    card.style.display = "";
+                } else {
+                    card.style.display = "none";
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <a href="{% url 'home' %}" class="home"><img src="https://cdn-icons-png.flaticon.com/128/69/69524.png" alt="home"></a>
+    <center>
+    <div class="search-bar">
+        <input type="text" id="searchInput" onkeyup="filterCards()" placeholder="Search for business...">
+    </div>
+</center>
+    <div id="businessCards">
+        {% for business in businesses %}
+            <div class="card">
+                <h3>{{ business.business_name }}</h3>
+                <p>Phone: {{ business.business_phone_number }}</p>
+                <p>Email: {{ business.business_email }}</p>
+                <p>Category: {{ business.category.category }}</p>
+                <a href="{% url 'qr_setup' business.business_id business.business_phone_number business.business_name business.business_email %}">Link QR 🔗</a>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

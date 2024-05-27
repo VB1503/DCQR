@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="https://res.cloudinary.com/dybwn1q6h/image/upload/v1715572132/favicon_tmeqwo.png" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'login.css' %}">
+</head>
+<body>
+    <div class="login-page">
+    <div class="login-logo-sec">
+    <img src="https://res.cloudinary.com/dybwn1q6h/image/upload/v1715572132/favicon_tmeqwo.png" alt="Digichola" width="30" height="30">
+    <p>Digichola Admin<span>DCQR</span></p>
+    </div>
+    <h2>Login</h2>
+    <form method="post" action="{% url 'login-api' %}">
+        {% csrf_token %}
+        <input type="email" id="email" name="email" placeholder="Email"><br>
+        <input type="password" id="password" name="password" placeholder="Password"><br>
+        <button type="submit">Login</button>
+    </form>
+</div>
+</body>
+</html>

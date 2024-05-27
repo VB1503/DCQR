@@ -1,0 +1,17 @@
+.logout h2{
+    color: rgb(41, 93, 196);
+    font-size: 28px;
+    font-weight: bold;
+}
+.logout a{
+    padding: 10px 20px;
+    border-radius: 18px;
+    border: solid 1px gray;
+    background-color: black;
+    color: white;
+    text-decoration: none;
+    transition: background-color .6s ease-in-out;
+}
+.logout a:hover{
+    background-color: rgb(54, 54, 54);
+}

@@ -1,0 +1,77 @@
+.home-header{
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.home-header h2{
+    color: rgb(30, 105, 203);
+    font-weight: bold;
+    font-size: 28px;
+}
+.home-header button{
+    padding: 10px 20px;
+    background-color: antiquewhite;
+    color: black;
+    border: none;
+    font-weight: bold;
+    border-radius:18px ;
+    cursor: pointer;
+    box-shadow: 0 0 4px #ccc;
+    border: solid 0.5 gray;
+    transition: background-color .8s ease-in-out;
+}
+.home-header button:hover{
+    background-color: rgb(30, 105, 203);
+    color: white;
+}
+.opt-cont{
+    display: grid;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 800px;
+    width: 100%;
+    padding: 20px;
+    margin: 10px auto;
+}
+.options{
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    flex-direction: column;
+    border-radius: 18px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 6px #e9e6e6 ;
+    padding: 14px;
+}
+.opt-cont img{
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+}
+.options p{
+    font-size: 16px;
+    width: 80%;
+    text-align: center;
+}
+.django-admin{
+    padding: 20px;
+    width: 80%;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-radius: 18px;
+    background-color: wheat;
+    text-decoration: none;
+    margin: 0 auto;
+}
+@media (max-width:746px){
+    .opt-cont{
+        grid-template-columns: repeat(1, 1fr);
+        grid-template-rows: repeat(4, 1fr);  
+    }
+}

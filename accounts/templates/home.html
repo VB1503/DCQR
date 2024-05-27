@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="https://res.cloudinary.com/dybwn1q6h/image/upload/v1715572132/favicon_tmeqwo.png" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'home.css' %}">
+</head>
+<body>
+    <div class="home-header">
+    <h2>Welcome, {{ user.first_name }}!</h2>
+    <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
+</div>
+<center>
+<a href="/admin" ><button class="django-admin">Go to DCQR Django Admin Panel</button></a>
+</center>
+<div class="opt-cont">
+    <a href="{% url 'generate_qr_codes' %}" class="options"><img src="https://cdn-icons-png.flaticon.com/128/1287/1287507.png" alt="QR"><p>Generate & Download QR's</p></a>
+    <a href="{% url 'business_details' %}" class="options"><img src="https://cdn-icons-png.flaticon.com/128/13103/13103906.png" alt="link"><p>Link QR to Business</p></a>
+    <a href="{% url 'unlinked_qr_list' %}" class="options"><img src="https://cdn-icons-png.flaticon.com/128/9502/9502265.png" alt="download"><p>Download Generated Unlinked QR's</p></a>
+    <a href="{% url 'linked_qr_list' %}" class="options"><img src="https://cdn-icons-png.flaticon.com/128/4302/4302089.png" alt="download"><p>Download Business Linked QR</p></a>
+</div>
+</body>
+</html>

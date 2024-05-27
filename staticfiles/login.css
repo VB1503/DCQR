@@ -1,0 +1,63 @@
+.login-page{
+    margin:auto;
+    max-width: 460px;
+    padding: 20px;
+    border: solid 1px goldenrod;
+    text-align: center;
+    margin-top: 20px;
+}
+.login-page form{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.login-logo-sec img{
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    vertical-align: middle;
+}
+.login-logo-sec p{
+    font-size: 28px;
+    color: rgb(28, 122, 217);
+    font-weight: bold;
+    display: inline-block;
+    margin-left: 10px;
+    vertical-align: middle;
+    
+}
+.login-logo-sec span{
+    color: rgb(97, 95, 194);
+    margin-left: 2px;
+    font-weight: bold;
+    font-size: 8px;
+    padding: 4px;
+    background-color: gold;
+    border-radius: 18px;
+    
+}
+.login-page h2{
+    font-size: 24px;
+    font-weight: bold;
+    color: rgb(97, 95, 194);
+}
+.login-page form input{
+    padding: 16px;
+    outline: none;
+    border-radius: 28px;
+    border: solid 1px #ccc;
+}
+.login-page form button{
+    background-color: rgb(43, 136, 217);
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 18px;
+    padding: 14px;
+    transition: background-color .6s ease-in-out;
+}
+.login-page form button:hover{
+    background-color: rgb(29, 99, 161) ;
+}

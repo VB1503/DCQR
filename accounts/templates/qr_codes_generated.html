@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="https://res.cloudinary.com/dybwn1q6h/image/upload/v1715572132/favicon_tmeqwo.png" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Codes Generated</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .home {
+            padding: 10px;
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            text-decoration: none;
+        }
+
+        .home img {
+            width: 30px;
+            height: 30px;
+            object-fit: cover;
+            display: block;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        li {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        li p {
+            margin: 10px 0;
+        }
+
+        li img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            li {
+                padding: 15px;
+            }
+
+            .home {
+                padding: 5px;
+            }
+
+            .home img {
+                width: 25px;
+                height: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="{% url 'home' %}" class="home"><img src="https://cdn-icons-png.flaticon.com/128/69/69524.png" alt="home"></a>
+    <h1>QR Codes Generated</h1>
+    <ul>
+        {% for qr in qr_models %}
+            <li>
+                <p>Chunk: {{ qr.unique_chunk }}</p>
+                <p>Link: <a href="{{ qr.qr_link }}">{{ qr.qr_link }}</a></p>
+                <p>QR Image: <img src="{{ qr.qr_image }}" alt="QR Code"></p>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
