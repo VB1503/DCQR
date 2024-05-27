@@ -9,7 +9,7 @@ __pycache__/
 *.pyc
 *.sqlite3
 local_settings.py
-
+.env
 # Virtual Environment
 .env/
 venv/
